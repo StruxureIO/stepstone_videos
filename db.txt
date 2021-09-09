@@ -1,0 +1,43 @@
+
+
+CREATE TABLE `video_tags` (
+  `tag_id` int(11) NOT NULL AUTO_INCREMENT,
+  `tag_name` varchar(40) NOT NULL,
+  `icon` varchar(30) NOT NULL,
+  `menu` tinyint(1) NOT NULL DEFAULT '0',
+  `force_top` tinyint(1) NOT NULL DEFAULT '0',
+  `views` bigint(20) NOT NULL DEFAULT '0',
+  `hide_top` tinyint(4) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `videos` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `video_title` varchar(120) CHARACTER SET utf8mb4 NOT NULL,
+  `embed_code` text CHARACTER SET utf8mb4 NOT NULL,
+  `description` text CHARACTER SET utf8mb4 NOT NULL,
+  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tags` text,
+  `image_url` text,
+  `views` bigint(20) NOT NULL DEFAULT '0',
+  `created_at` datetime DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `video_tag_list` (
+  `list_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `video_id` bigint(20) NOT NULL,
+  `tag_id` bigint(20) NOT NULL,
+   PRIMARY KEY (`list_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `videos_favorites` (
+  `fav_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `video_id` int(11) NOT NULL,
+   PRIMARY KEY (`fav_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+

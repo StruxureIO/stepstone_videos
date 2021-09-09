@@ -1,0 +1,12 @@
+{
+    "id": "stepstone_videos",
+    "name": "Videos",
+    "description": "V2 of module for adding and displaying StepStone videos.",
+    "keywords": [
+    ],
+    "version": "0.0.3",
+    "humhub": {
+        "minVersion": "1.3"
+    },
+    "screenshots": ["assets/screen1.jpg"]
+}
