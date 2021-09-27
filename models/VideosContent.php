@@ -2,6 +2,10 @@
 
 namespace humhub\modules\stepstone_videos\models;
 
+use humhub\modules\space\models\Membership;
+use humhub\modules\space\models\Space;
+use humhub\modules\stepstone_videos\notifications\VideoAdded;
+use humhub\modules\user\models\User;
 use Yii;
 use yii\web\UploadedFile;
 use humhub\modules\content\models\Content;
@@ -39,11 +43,11 @@ class VideosContent extends ContentActiveRecord implements Searchable
      * {@inheritdoc}
      */
     public $image;
-    
+
     public $contentContainer;
-        
+
     public $wallEntryClass = "humhub\modules\stepstone_videos\widgets\VideoWall";
-      
+
     public static function tableName()
     {
         return 'videos';
@@ -59,8 +63,8 @@ class VideosContent extends ContentActiveRecord implements Searchable
             [['embed_code', 'description', 'tags', 'image_url'], 'string'],
             [['date_added', 'created_at', 'updated_at'], 'safe'],
             [['views', 'created_by', 'updated_by'], 'integer'],
-            [['image'],'file', 'skipOnEmpty' => true, 'extensions' => 'png,gif,jpg'],            
-            [['video_title'], 'string', 'max' => 120],            
+            [['image'],'file', 'skipOnEmpty' => true, 'extensions' => 'png,gif,jpg'],
+            [['video_title'], 'string', 'max' => 120],
         ];
     }
 
@@ -85,7 +89,44 @@ class VideosContent extends ContentActiveRecord implements Searchable
             'updated_by' => 'Updated By',
         ];
     }
-    
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $users = $this->findSpaceMembers($this->content->contentcontainer_id);
+
+        //Sending notification
+        if (!empty($users)) {
+            $notification = VideoAdded::instance()
+                ->from($this->createdBy)
+                ->about($this);
+            $notification->sendBulk($users);
+        }
+
+        parent::afterSave($insert, $changedAttributes);
+
+    }
+
+    /**
+     * @param $spaceContainerId integer the space content container id
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function findSpaceMembers(int $spaceContainerId)
+    {
+        $space = Space::find()
+            ->where(['contentcontainer_id' => $spaceContainerId])
+            ->one();
+        $members = Membership::find()
+            ->where(['space_id' => $space->id])
+            ->asArray()
+            ->all();
+        $usersIds = array_map(function ($member) {
+            return $member['user_id'];
+        }, $members);
+        return User::find()
+            ->where(['in', 'id', $usersIds])
+            ->all();
+    }
+
     public function getSearchAttributes()
     {
       $attributes = [
@@ -97,19 +138,19 @@ class VideosContent extends ContentActiveRecord implements Searchable
 
       return $attributes;
     }
-    
+
     public function getWallOut($params = Array())
     {
         return VideoWall::widget(['videos' => $this]);
     }
-    
+
     public function videoAdded($id) {
-      
+
       $activity = new \humhub\modules\stepstone_videos\activities\NewVideo();
       $activity->source = $this;
       $activity->originator = Yii::$app->user->getIdentity();
       $activity->create();
-            
+
     }
 
 }
