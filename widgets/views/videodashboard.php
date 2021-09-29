@@ -4,6 +4,8 @@ use humhub\libs\Html;
 use humhub\widgets\PanelMenu;
 use humhub\modules\ui\view\components\View;
 use yii\helpers\Url;
+use yii\web\UrlManager;
+
 
 ?>
 
@@ -50,10 +52,17 @@ use yii\helpers\Url;
       <ul id="videos-widget">
         <?php if($videos) { ?>
           <?php foreach($videos as $video) { ?>
-           <?php $cover = Url::base() . '/' . $video['image_url'] ?>
+            <?php 
+              if (\Yii::$app->urlManager->enablePrettyUrl) 
+                $watch_link = Url::base() . "/stepstone_videos/index/watch?video_id=" . $video['id'];
+              else
+                $watch_link = Url::base() ."/index.php?r=stepstone_videos%2Findex%2Fwatch&video_id=" . $video['id'];
+              
+              $cover = Url::base() . '/' . $video['image_url'];              
+            ?>
             <li> 
-              <div class="vw-title"><a href="<?php echo Url::base() ."/index.php?r=stepstone_videos%2Findex%2Fwatch&video_id=" . $video['id'] ?>"><?php echo $video['video_title'] ?></a></div>
-              <a href="<?php echo Url::base() ."/index.php?r=stepstone_videos%2Findex%2Fwatch&video_id=" . $video['id'] ?>">
+              <div class="vw-title"><a href="<?php echo $watch_link ?>"><?php echo $video['video_title'] ?></a></div>
+              <a href="<?php echo $watch_link ?>">
                 <img class="vw-video-thumbnail" src="<?php echo $cover ?>" alt="<?php echo $video['video_title'] ?> thumbnail image" >
               </a>  
               <div class="vw-description"><?php echo $video['description'] ?></div>

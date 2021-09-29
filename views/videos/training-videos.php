@@ -53,6 +53,12 @@ include "protected/modules/stepstone_videos/widgets/VideosMenu.php";
 </div><!--container-fluid-->
 <?php
 $watch_url = Url::toRoute(['index/watch']);
+
+if(strpos($watch_url, '?') !== false)
+  $idparam = "&video_id=";    
+else
+  $idparam = "?video_id=";         
+
 $ajax_training = yii\helpers\Url::to(['ajax-training-videos']);
 $ajax_favorite = yii\helpers\Url::to(['ajax-favorite']);
 $ajax_search_training_videos = yii\helpers\Url::to(['ajax-search-training-videos']);
@@ -114,7 +120,7 @@ $this->registerJs("
   $(document).on('click', '.step-video-link', function (e) {
     e.stopImmediatePropagation();
     var video_id  = $(this).attr('data-video-id');   
-    window.location.href = '$watch_url' + '&video_id=' + video_id;
+    window.location.href = '$watch_url' + '$idparam' + video_id;
   });
   
   $(document).on('click', '#step-video-prev, #step-video-next', function (e) {  

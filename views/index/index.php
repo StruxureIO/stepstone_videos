@@ -92,6 +92,12 @@ use yii\db\Query;
 </div>  
 <?php
 $watch_url =  Url::toRoute(['index/watch']);
+
+if(strpos($watch_url, '?') !== false)
+  $idparam = "&video_id=";    
+else
+  $idparam = "?video_id=";         
+
 $ajax_favorite = yii\helpers\Url::to(['ajax-favorite']);
 $ajax_url = yii\helpers\Url::to(['ajax-view']);
 $csrf_param = Yii::$app->request->csrfParam;
@@ -176,7 +182,7 @@ $this->registerJs("
   $(document).on('click', '.step-video-link', function (e) {
     e.stopImmediatePropagation();
     var video_id  = $(this).attr('data-video-id');   
-    window.location.href = '$watch_url' + '&video_id=' + video_id;
+    window.location.href = '$watch_url' + '$idparam' + video_id;
   });
   
   $(document).on('keypress',function(e) {
