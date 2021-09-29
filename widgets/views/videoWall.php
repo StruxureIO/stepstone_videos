@@ -3,9 +3,13 @@
 use humhub\modules\stepstone_videos\models\VideosContent;
 use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\web\UrlManager;
 
+if (\Yii::$app->urlManager->enablePrettyUrl) 
+  $watch_link = Url::base() . "/stepstone_videos/index/watch?video_id=" . $videos->id;
+else
+  $watch_link = Url::base() ."/index.php?r=stepstone_videos%2Findex%2Fwatch&video_id=" . $videos->id;
 
-$watch_link = Url::base() ."/index.php?r=stepstone_videos%2Findex%2Fwatch&video_id=" . $videos->id;
 ?>
 
 <div>
