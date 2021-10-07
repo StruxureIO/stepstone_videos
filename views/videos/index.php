@@ -138,6 +138,7 @@ $this->registerJs("
         '$csrf_param' : '$csrf_token',
         'tag' : tag,
         'tag_name' : tag_name,
+        'search_text' : '',
         'page' : page
       },
       'success' : function(data){
@@ -221,7 +222,8 @@ $this->registerJs("
         '$csrf_param' : '$csrf_token',
         'tag' : 'all',
         'tag_name' : 'All Tags',
-        'search_text' : search_text
+        'search_text' : search_text,
+        'page' : 0
       },
       'success' : function(data){
         $('#ajaxloader').hide();

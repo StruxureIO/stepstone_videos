@@ -58,19 +58,19 @@ class VideosController extends ContentContainerController
       return $this->render('index', ['tags' => $video_tags, 'top_tags' => $top_tags]);
     }
         
-    public function actionAjaxView($tag, $tag_name, $page = 0){
+    public function actionAjaxView($tag, $tag_name, $search_text, $page = 0){
       
       Yii::debug('actionAjaxView');
       
-      $req = Yii::$app->request;
-            
-      $tag = $req->get('tag', "all");
-      
-      $tag_name = $req->get('tag_name', "All Tags");
-      
-      $page = $req->get('page', 0);
-      
-      $search_text = $req->get('search_text', '');
+//      $req = Yii::$app->request;
+//            
+//      $tag = $req->get('tag', "all");
+//      
+//      $tag_name = $req->get('tag_name', "All Tags");
+//      
+//      $page = $req->get('page', 0);
+//      
+//      $search_text = $req->get('search_text', '');
                                        
       $current_user_id = \Yii::$app->user->identity->ID;
       $icon = '';
