@@ -43,7 +43,10 @@ use humhub\modules\videos\VideoTags;
                   <!--<td class="tb-tag-menu center">< ?php echo $menu_checked ?></td>-->
                   <td class="tb-tag-force-top center"><?php echo $force_top_checked ?></td>                  
                   <td class="tb-tag-force-top center"><?php echo $hide_top_checked ?></td>                  
-                  <td class="tb-tag-edit center"><a href="index.php?r=videos%2Fadmin%2Fupdatetag&amp;id=<?php echo $tag->tag_id ?>"><i class="far fa-edit"></i></i></a></td>
+                  <!--<td class="tb-tag-edit center"><a href="index.php?r=videos%2Fadmin%2Fupdatetag&amp;id=< ?php echo $tag->tag_id ?>"><i class="far fa-edit"></i></i></a></td>-->
+                  
+                  <td class="tb-tag-edit center"><?= Html::a('<i class="far fa-edit"></i>', ['updatetag', 'id' => $tag->tag_id], ['class' => 'step-updte-tag']) ?></td>
+                  
                   <td class="tb-tag-delete center"><?= Html::a('<i class="fal fa-trash-alt"></i>', ['deletetag', 'id' => $tag->tag_id], [
                     'class' => 'step-delete-tag',
                     'data' => [
