@@ -26,7 +26,8 @@ class Events
         $event->sender->addItem([
             'label' => 'Videos',
             'icon' => '<i class="far fa-video"></i>',
-            'url' => Url::to(['/stepstone_videos/index']),
+            'url' => Url::to(['/s/welcome-space/stepstone_videos/videos']),
+            //'url' => Url::to(['/stepstone_videos/index']),
             'sortOrder' => 99999,
             'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'videos' && Yii::$app->controller->id == 'index'),
         ]);
