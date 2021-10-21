@@ -100,7 +100,7 @@ class Module extends ContentContainerModule
     }
     
     public static function onSidebarInit($event){
-      if (Yii::$app->hasModule('Videos')) {
+      if (Yii::$app->hasModule('stepstone_videos')) {
 
         $event->sender->addWidget(widgets\Sidebar::className(), array(), array(
             'sortOrder' => 150
