@@ -5,10 +5,14 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use humhub\modules\stepstone_videos\widgets\VideosMenu;
 use yii\db\Query;
+use humhub\modules\content\helpers\ContentContainerHelper;
 
 include "protected/modules/stepstone_videos/widgets/VideosMenu.php";
 
 \humhub\modules\stepstone_videos\assets\Assets::register($this);
+
+$container = ContentContainerHelper::getCurrent();
+$container_guid = ($container) ? $container->guid : null;
 
 ?>
 
@@ -75,6 +79,7 @@ $this->registerJs("
       'url' : '$ajax_masterminds',
       'dataType' : 'json',
       'data' : {
+        'cguid' : '$container_guid',      
         '$csrf_param' : '$csrf_token',
         'page' : page  
       },
@@ -106,6 +111,7 @@ $this->registerJs("
       'url' : '$ajax_favorite',
       'dataType' : 'html',
       'data' : {
+        'cguid' : '$container_guid',      
         '$csrf_param' : '$csrf_token',
         'user_id' : user_id,
         'video_id' : video_id,
@@ -150,6 +156,7 @@ $this->registerJs("
       'url' : '$ajax_search_masterminds',
       'dataType' : 'json',
       'data' : {
+        'cguid' : '$container_guid',      
         '$csrf_param' : '$csrf_token',
         'tag' : '1',
         'tag_name' : 'Masterminds',

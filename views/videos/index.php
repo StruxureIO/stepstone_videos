@@ -219,6 +219,7 @@ $this->registerJs("
       'url' : '$ajax_url',
       'dataType' : 'json',
       'data' : {
+        'cguid' : '$container_guid',
         '$csrf_param' : '$csrf_token',
         'tag' : 'all',
         'tag_name' : 'All Tags',

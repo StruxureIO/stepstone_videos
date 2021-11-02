@@ -208,6 +208,7 @@ $this->registerJs("
   
   function do_search() {
     var search_text = $('#video-search-field').val();
+    console.log('search_text',search_text);
     $('#ajaxloader').show();
     $.ajax({
       'type' : 'GET',
