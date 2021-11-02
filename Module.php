@@ -27,14 +27,9 @@ if(!defined('MASTERMINDS'))
   define('MASTERMINDS', '1');
 if(!defined('TRAINING_VIDEOS')) 
   define('TRAINING_VIDEOS', '2');
+if(!defined('CASE_STUDIES'))   
+  define('CASE_STUDIES', '7');
 
-if(defined('LOCALHOST')) {
-  if(!defined('CASE_STUDIES')) 
-   define('CASE_STUDIES', '7');
-} else {
-  if(!defined('CASE_STUDIES'))   
-    define('CASE_STUDIES', '3');
-}
 
 class Module extends ContentContainerModule
 {
