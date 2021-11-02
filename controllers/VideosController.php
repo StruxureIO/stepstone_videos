@@ -453,99 +453,88 @@ class VideosController extends ContentContainerController
       
     }
     
-    public function actionAdd($cguid) {
+    public function actionAdd($cguid){
       
-      //Yii::$app->cache->flush();      
-      $current_user_id = \Yii::$app->user->identity->ID;
-            
-      $model = new \humhub\modules\stepstone_videos\models\VideosContent($this->contentContainer);
+        $current_user_id = \Yii::$app->user->identity->ID;
       
-      $this->mVideoTags = new \humhub\modules\stepstone_videos\models\VideoTags();
-      
-      //$currentTags = new \humhub\modules\stepstone_videos\models\VideoTagList();
-      $this->mTagList = new \humhub\modules\stepstone_videos\models\VideoTagList();
-      
-      $tags = $this->mVideoTags::find()->all();      
-      
-      //$model = $this->mVideos::find()->where(['video_id' => $id])->one();      
-      //$currentTags = $this->mTagList::find()->all(); 
-      //$currentTags = $this->mTagList::find()->where(['video_id' => $id])->aa();      
-            
-      if ($model->load(Yii::$app->request->post())) { 
+        $model = new \humhub\modules\stepstone_videos\models\VideosContent($this->contentContainer);
         
-        $model->content->visibility = Content::VISIBILITY_PUBLIC;
-
-        $model->created_at = date('Y-m-d H:i:s');
-        $model->created_by = $current_user_id;
-        $model->updated_at = date('Y-m-d H:i:s');
-        $model->updated_by = $current_user_id;
+        $this->mVideoTags = new \humhub\modules\stepstone_videos\models\VideoTags();
+        
+        $this->mTagList = new \humhub\modules\stepstone_videos\models\VideoTagList();
                 
-        $model->image = UploadedFile::getInstance($model, 'image');
+        $tags = $this->mVideoTags::find()->all();      
         
-      //if ($model->file && $model->validate()) {                
-      //    $model->file->saveAs('uploads/' . $model->file->baseName . '.' . $model->file->extension);
-      //}        
+        //$currentTags = $this->mTagList::find()->all(); 
 
-        if ($model->image && $model->validate()) {                
+        if ($model->load(Yii::$app->request->post())) {
+                    
+          $model->created_at = date('Y-m-d H:i:s');
+          $model->created_by = $current_user_id;
+          $model->updated_at = date('Y-m-d H:i:s');
+          $model->updated_by = $current_user_id;
+                                                  
+          $model->image = UploadedFile::getInstance($model, 'image');
           
-          //check for duplicate file names
-          
-          $file_number = 1;
-          $image_url = VIDEO_THUMBNAIL_PATH . $model->image->baseName . '.' . $model->image->extension;                    
-          //$image_url = 'uploads/' . $model->image->baseName . '.' . $model->image->extension;
-          
-          // base path
-          $image_path = Yii::getAlias('@app');
-          $image_path = str_replace('protected', $image_url, $image_path);
-
-          while(file_exists($image_path) && ($file_number < 10)) {
-            $image_url = VIDEO_THUMBNAIL_PATH . $model->image->baseName . '-' . $file_number . '.' . $model->image->extension;
+          if ($model->image && $model->validate()) {                
+                        
+            $file_number = 1;
+            $image_url = VIDEO_THUMBNAIL_PATH . $model->image->baseName . '.' . $model->image->extension;                    
+            //$image_url = 'uploads/' . $model->image->baseName . '.' . $model->image->extension;
+            
+            // base path
             $image_path = Yii::getAlias('@app');
             $image_path = str_replace('protected', $image_url, $image_path);
-            $file_number++;
-          }  
-                              
-          $model->image->saveAs($image_url);          
-          $model->image_url = $image_url;
-          
-          if($model->save(false)) {
-            
-            $this->mTagList::deleteAll(['video_id' => $model->id]);
-            $selected_tags = explode(',', $model->tags);      
-            foreach($selected_tags as $tag) {
-              $new_tag = new \humhub\modules\stepstone_videos\models\VideoTagList();
-              $new_tag->video_id = $model->id;
-              $new_tag->tag_id = $tag;
-              $new_tag->save();
+
+            while(file_exists($image_path) && ($file_number < 10)) {
+              $image_url = VIDEO_THUMBNAIL_PATH . $model->image->baseName . '-' . $file_number . '.' . $model->image->extension;
+              $image_path = Yii::getAlias('@app');
+              $image_path = str_replace('protected', $image_url, $image_path);
+              $file_number++;
+            }  
+                                      
+            $model->image_url = $image_url;
+            $model->image->saveAs($image_url);          
+                                     
+            if ($model->save(false)) {
+
+              //$this->mTagList::deleteAll(['video_id' => $model->id]);
+              $selected_tags = explode(',', $model->tags);      
+              foreach($selected_tags as $tag) {
+                $new_tag = new \humhub\modules\stepstone_videos\models\VideoTagList();
+                $new_tag->video_id = $model->id;
+                $new_tag->tag_id = $tag;
+                $new_tag->save();
+              }
             }
+          } else if ($model->validate()) {
             
-            $model->videoAdded($model->id);
-                        
-          }
-        } else if ($model->validate()) {
+            if ($model->save(false)) {
 
-          if ($model->save(false)) {
+              //$this->mTagList::deleteAll(['video_id' => $model->id]);
+              $selected_tags = explode(',', $model->tags);      
+              foreach($selected_tags as $tag) {
+                $new_tag = new \humhub\modules\stepstone_videos\models\VideoTagList();
+                $new_tag->video_id = $model->id;
+                $new_tag->tag_id = $tag;
+                $new_tag->save();
+              }
+            }                        
+          }      
+          return $this->redirect(["videos/adminindex", 'cguid' => $cguid]);
+        }
 
-            $this->mTagList::deleteAll(['video_id' => $model->id]);
-            $selected_tags = explode(',', $model->tags);      
-            foreach($selected_tags as $tag) {
-              $new_tag = new \humhub\modules\stepstone_videos\models\VideoTagList();
-              $new_tag->video_id = $model->id;
-              $new_tag->tag_id = $tag;
-              $new_tag->save();
-            }
-          }                        
-        }      
-
-        return $this->redirect(["videos/adminindex", 'cguid' => $cguid]);
-      }
-
-    return $this->render('addvideo', ['model' => $model, 'tags' => $tags, 'cguid' => $cguid]);
-      
-    }
+        return $this->render('addvideo', [
+          'model' => $model,
+          'tags' => $tags,  
+          'cguid' => $cguid,  
+        ]);
+                
+    }        
         
     public function actionUpdate($id, $cguid){
       
+        //$this->mVideos = new \humhub\modules\stepstone_videos\models\Videos();
         $this->mVideos = new \humhub\modules\stepstone_videos\models\VideosContent($this->contentContainer);
         
         $this->mVideoTags = new \humhub\modules\stepstone_videos\models\VideoTags();
@@ -556,11 +545,14 @@ class VideosController extends ContentContainerController
         
         $tags = $this->mVideoTags::find()->all();      
         
-        //$currentTags = $this->mTagList::find()->where(['video_id' => $id])->all();      
+        //$currentTags = $this->mTagList::find()->where(['id' => $id])->all();      
         $currentTags = $this->mTagList::find()->all(); 
 
         if ($model->load(Yii::$app->request->post())) {
-                              
+          
+          $model->updated_at = date('Y-m-d H:i:s');
+          $model->updated_by = \Yii::$app->user->identity->ID;
+                                        
           $model->image = UploadedFile::getInstance($model, 'image');
           
           if ($model->image && $model->validate()) {                
@@ -616,8 +608,8 @@ class VideosController extends ContentContainerController
           'tags' => $tags,  
           'cguid' => $cguid,  
         ]);
-    }
-    
+    }    
+            
     public function actionDelete($id, $cguid) {
       
       // delete tag list records
