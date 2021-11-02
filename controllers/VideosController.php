@@ -59,8 +59,8 @@ class VideosController extends ContentContainerController
     }
         
     public function actionAjaxView($tag, $tag_name, $search_text, $page = 0){
-      
-      Yii::debug('actionAjaxView');
+                  
+      //Yii::debug('actionAjaxView');
       
 //      $req = Yii::$app->request;
 //            
@@ -86,7 +86,7 @@ class VideosController extends ContentContainerController
                           [ 'like' , 'description' , $search_text ],
                       ])
               ->orderBy(['date_added' => SORT_DESC])
-              ->groupBy(['videos.id'])
+              //->groupBy(['videos.id'])
               ->count();
         
         $offset = $page * MAX_ITEMS;
@@ -101,7 +101,7 @@ class VideosController extends ContentContainerController
                             [ 'like' , 'description' , $search_text ],
                         ])
                 ->orderBy(['date_added' => SORT_DESC])
-                ->groupBy(['videos.id'])
+                //->groupBy(['videos.id'])
                 //->limit(1)
                 ->limit(MAX_ITEMS)
                 ->offset($offset)
@@ -789,5 +789,275 @@ class VideosController extends ContentContainerController
       throw new NotFoundHttpException('The requested page does not exist.');
     }  
     
-                                           
+    public function actionMasterminds(){
+            
+      return $this->render('masterminds');
+      
+    }        
+    
+    public function actionTrainingVideos(){
+            
+      return $this->render('training-videos');
+      
+    }            
+    
+    public function actionCaseStudies(){
+            
+      return $this->render('case-studies');
+      
+    }       
+    
+    public function actionAjaxMasterminds() {
+      
+      $req = Yii::$app->request;
+                  
+      $page = $req->get('page', 0);
+                  
+      $current_user_id = \Yii::$app->user->identity->ID;
+      
+      $count = (new Query())
+              ->select(['videos.id'])
+              ->from('videos')
+              ->leftJoin('video_tag_list', 'videos.id = video_tag_list.video_id')
+              ->join('left join', 'videos_favorites', 'videos.id = videos_favorites.video_id and videos_favorites.user_id = ' . $current_user_id)
+              ->where(['tag_id' => MASTERMINDS])
+              ->orderBy(['video_title' => SORT_ASC])
+              ->groupBy(['videos.id'])
+              ->count();
+
+      $offset = $page * MAX_ITEMS;
+      $total_number_pages = ceil($count / MAX_ITEMS);        
+                        
+      $videos = (new Query())
+              ->select(['videos.*', 'videos_favorites.fav_id as favorite'])
+              ->from('videos')
+              ->leftJoin('video_tag_list', 'videos.id = video_tag_list.video_id')
+              ->join('left join', 'videos_favorites', 'videos.id = videos_favorites.video_id and videos_favorites.user_id = ' . $current_user_id)
+              ->where(['tag_id' => MASTERMINDS])
+              ->orderBy(['video_title' => SORT_ASC])
+              ->groupBy(['videos.id'])
+              ->limit(MAX_ITEMS)
+              ->offset($offset)
+              ->all();
+      
+                    
+      return $this->renderPartial('_view', [
+        'videos' => $videos,
+        'tag_name' => 'Masterminds',
+        'page' => $page,
+        'total_number_pages' => $total_number_pages  
+      ]);
+        
+      die();
+    }
+    
+    public function actionAjaxSearchMasterminds() {
+      
+      $req = Yii::$app->request;
+                  
+      $search_text = $req->get('search_text', '');
+      
+      $page = $req->get('page', 0);
+                  
+      $current_user_id = \Yii::$app->user->identity->ID;
+      
+      $count = (new Query())
+              ->select(['videos.id'])
+              ->from('videos')
+              ->leftJoin('video_tag_list', 'videos.id = video_tag_list.video_id')
+              ->join('left join', 'videos_favorites', 'videos.id = videos_favorites.video_id and videos_favorites.user_id = ' . $current_user_id)              
+              ->where(
+                      ['and',
+                        ['tag_id' => MASTERMINDS],
+                        ['like', 'video_title', $search_text]])
+              ->orWhere(
+                      ['and',
+                        ['tag_id' => MASTERMINDS],
+                        ['like', 'description', $search_text]])              
+              ->orderBy(['video_title' => SORT_DESC])
+              ->groupBy(['videos.id'])
+              ->count();
+
+      $offset = $page * MAX_ITEMS;
+      $total_number_pages = ceil($count / MAX_ITEMS);        
+
+                        
+      $videos = (new Query())
+              ->select(['videos.*', 'videos_favorites.fav_id as favorite'])
+              ->from('videos')
+              ->leftJoin('video_tag_list', 'videos.id = video_tag_list.video_id')
+              ->join('left join', 'videos_favorites', 'videos.id = videos_favorites.video_id and videos_favorites.user_id = ' . $current_user_id)              
+              ->where(
+                      ['and',
+                        ['tag_id' => MASTERMINDS],
+                        ['like', 'video_title', $search_text]])
+              ->orWhere(
+                      ['and',
+                        ['tag_id' => MASTERMINDS],
+                        ['like', 'description', $search_text]])              
+              ->orderBy(['video_title' => SORT_DESC])
+              ->groupBy(['videos.id'])
+              ->limit(MAX_ITEMS)
+              ->offset($offset)
+              ->all();            
+                          
+      return $this->renderPartial('_view', [
+        'videos' => $videos,
+        'tag_name' => 'Masterminds',
+        'page' => $page,
+        'total_number_pages' => $total_number_pages  
+      ]);
+     
+      die();
+    }
+    
+    public function actionAjaxTrainingVideos() {
+      
+      $req = Yii::$app->request;
+                  
+      $page = $req->get('page', 0);
+                  
+      $current_user_id = \Yii::$app->user->identity->ID;
+      
+      $count = (new Query())
+              ->select(['videos.id'])
+              ->from('videos')
+              ->leftJoin('video_tag_list', 'videos.id = video_tag_list.video_id')
+              ->join('left join', 'videos_favorites', 'videos.id = videos_favorites.video_id and videos_favorites.user_id = ' . $current_user_id)
+              ->where(['tag_id' => TRAINING_VIDEOS])
+              ->orderBy(['video_title' => SORT_ASC])
+              ->groupBy(['videos.id'])
+              ->count();
+
+      $offset = $page * MAX_ITEMS;
+      $total_number_pages = ceil($count / MAX_ITEMS);        
+                        
+      $videos = (new Query())
+              ->select(['videos.*', 'videos_favorites.fav_id as favorite'])
+              ->from('videos')
+              ->leftJoin('video_tag_list', 'videos.id = video_tag_list.video_id')
+              ->join('left join', 'videos_favorites', 'videos.id = videos_favorites.video_id and videos_favorites.user_id = ' . $current_user_id)
+              ->where(['tag_id' => TRAINING_VIDEOS])
+              ->orderBy(['video_title' => SORT_ASC])
+              ->groupBy(['videos.id'])
+              ->limit(MAX_ITEMS)
+              ->offset($offset)
+              ->all();
+      
+                    
+      return $this->renderPartial('_view', [
+        'videos' => $videos,
+        'tag_name' => 'Training Videos',
+        'page' => $page,
+        'total_number_pages' => $total_number_pages  
+      ]);
+        
+      die();
+    }
+    
+    public function actionAjaxSearchTrainingVideos() {
+      
+      $req = Yii::$app->request;
+                  
+      $search_text = $req->get('search_text', '');
+      
+      $page = $req->get('page', 0);
+                  
+      $current_user_id = \Yii::$app->user->identity->ID;
+      
+      $count = (new Query())
+              ->select(['videos.id'])
+              ->from('videos')
+              ->leftJoin('video_tag_list', 'videos.id = video_tag_list.video_id')
+              ->join('left join', 'videos_favorites', 'videos.id = videos_favorites.video_id and videos_favorites.user_id = ' . $current_user_id)              
+              ->where(
+                      ['and',
+                        ['tag_id' => TRAINING_VIDEOS],
+                        ['like', 'video_title', $search_text]])
+              ->orWhere(
+                      ['and',
+                        ['tag_id' => TRAINING_VIDEOS],
+                        ['like', 'description', $search_text]])              
+              ->orderBy(['video_title' => SORT_DESC])
+              ->groupBy(['videos.id'])
+              ->count();
+
+      $offset = $page * MAX_ITEMS;
+      $total_number_pages = ceil($count / MAX_ITEMS);        
+
+                        
+      $videos = (new Query())
+              ->select(['videos.*', 'videos_favorites.fav_id as favorite'])
+              ->from('videos')
+              ->leftJoin('video_tag_list', 'videos.id = video_tag_list.video_id')
+              ->join('left join', 'videos_favorites', 'videos.id = videos_favorites.video_id and videos_favorites.user_id = ' . $current_user_id)              
+              ->where(
+                      ['and',
+                        ['tag_id' => TRAINING_VIDEOS],
+                        ['like', 'video_title', $search_text]])
+              ->orWhere(
+                      ['and',
+                        ['tag_id' => TRAINING_VIDEOS],
+                        ['like', 'description', $search_text]])              
+              ->orderBy(['video_title' => SORT_DESC])
+              ->groupBy(['videos.id'])
+              ->limit(MAX_ITEMS)
+              ->offset($offset)
+              ->all();            
+                          
+      return $this->renderPartial('_view', [
+        'videos' => $videos,
+        'tag_name' => 'Training Videos',
+        'page' => $page,
+        'total_number_pages' => $total_number_pages  
+      ]);
+     
+      die();
+    }    
+    
+    public function actionAjaxCaseStudies() {
+      
+      $req = Yii::$app->request;
+                  
+      $page = $req->get('page', 0);
+                  
+      $current_user_id = \Yii::$app->user->identity->ID;
+      
+      $count = (new Query())
+              ->select(['videos.id'])
+              ->from('videos')
+              ->leftJoin('video_tag_list', 'videos.id = video_tag_list.video_id')
+              ->join('left join', 'videos_favorites', 'videos.id = videos_favorites.video_id and videos_favorites.user_id = ' . $current_user_id)
+              ->where(['tag_id' => CASE_STUDIES])
+              ->orderBy(['video_title' => SORT_ASC])
+              ->groupBy(['videos.id'])
+              ->count();
+
+      $offset = $page * MAX_ITEMS;
+      $total_number_pages = ceil($count / MAX_ITEMS);        
+                        
+      $videos = (new Query())
+              ->select(['videos.*', 'videos_favorites.fav_id as favorite'])
+              ->from('videos')
+              ->leftJoin('video_tag_list', 'videos.id = video_tag_list.video_id')
+              ->join('left join', 'videos_favorites', 'videos.id = videos_favorites.video_id and videos_favorites.user_id = ' . $current_user_id)
+              ->where(['tag_id' => CASE_STUDIES])
+              ->orderBy(['video_title' => SORT_ASC])
+              ->groupBy(['videos.id'])
+              ->limit(MAX_ITEMS)
+              ->offset($offset)
+              ->all();
+      
+                    
+      return $this->renderPartial('_view', [
+        'videos' => $videos,
+        'tag_name' => 'Case Studies',
+        'page' => $page,
+        'total_number_pages' => $total_number_pages  
+      ]);
+        
+      die();
+    }
+    
+                                               
 }

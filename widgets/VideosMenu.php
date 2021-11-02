@@ -60,7 +60,7 @@ class VideosMenu extends LeftNavigation
               //'url' => ['/stepstone_videos/index/favorites'],
               'url' => $container->createUrl('index/favorites'),
               'sortOrder' => 100,
-              'isActive' => MenuLink::isActiveState('stepstone_videos', 'index', 'favorites')
+              'isActive' => MenuLink::isActiveState('stepstone_videos', 'videos', 'favorites')
           ]));
           
           $this->addEntry(new MenuLink([
@@ -70,7 +70,7 @@ class VideosMenu extends LeftNavigation
               //'url' => ['/stepstone_videos/index/popular'],
               'url' => $container->createUrl('index/popular'),
               'sortOrder' => 200,
-              'isActive' => MenuLink::isActiveState('stepstone_videos', 'index', ['popular'])
+              'isActive' => MenuLink::isActiveState('stepstone_videos', 'videos', ['popular'])
           ]));
 
           $this->addEntry(new MenuLink([
@@ -80,7 +80,7 @@ class VideosMenu extends LeftNavigation
               //'url' => ['/stepstone_videos/index/index'],
               'url' => $container->createUrl('index/index'),
               'sortOrder' => 300,
-              'isActive' => MenuLink::isActiveState('stepstone_videos', 'index', 'index')
+              'isActive' => MenuLink::isActiveState('stepstone_videos', 'videos', 'index')
           ]));
           
           $this->addEntry(new MenuLink([
@@ -88,9 +88,9 @@ class VideosMenu extends LeftNavigation
               'icon' => 'fa-brain',
               'label' => Yii::t('StepstoneVideosModule.base', 'Masterminds'),
               //'url' => ['/stepstone_videos/index/masterminds'],
-              'url' => [$container->createUrl('index/masterminds')],
+              'url' => $container->createUrl('videos/masterminds'),
               'sortOrder' => 400,
-              'isActive' => MenuLink::isActiveState('stepstone_videos', 'index', 'masterminds')
+              'isActive' => MenuLink::isActiveState('stepstone_videos', 'videos', 'masterminds')
           ]));
 
           $this->addEntry(new MenuLink([
@@ -98,9 +98,9 @@ class VideosMenu extends LeftNavigation
               'icon' => 'fa-chalkboard-teacher',
               'label' => Yii::t('StepstoneVideosModule.base', 'Training Videos'),
               //'url' => ['/stepstone_videos/index/training-videos'],
-              'url' => [$container->createUrl('index/training-videos')],
+              'url' => $container->createUrl('videos/training-videos'),
               'sortOrder' => 500,
-              'isActive' => MenuLink::isActiveState('stepstone_videos', 'index', 'training-videos')
+              'isActive' => MenuLink::isActiveState('stepstone_videos', 'videos', 'training-videos')
           ]));
 
           $this->addEntry(new MenuLink([
@@ -108,9 +108,9 @@ class VideosMenu extends LeftNavigation
               'icon' => 'fa-books',
               'label' => Yii::t('StepstoneVideosModule.base', 'Case Studies'),
               //'url' => ['/stepstone_videos/index/case-studies'],
-              'url' => [$container->createUrl('index/case-studies')],
+              'url' => $container->createUrl('videos/case-studies'),
               'sortOrder' => 600,
-              'isActive' => MenuLink::isActiveState('stepstone_videos', 'index', 'case-studies')
+              'isActive' => MenuLink::isActiveState('stepstone_videos', 'videos', 'case-studies')
           ]));
           
                             
