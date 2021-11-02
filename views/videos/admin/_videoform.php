@@ -40,7 +40,7 @@ $thumbnail_style = '';
                         
             <?= $form->field($model, 'image')->fileInput() ?>
             
-            <input type="hidden" id="video-tags" name="Videos[tags]" value="<?php echo $model->tags ?>">
+            <input type="hidden" id="video-tags" name="VideosConten[tags]" value="<?php echo $model->tags ?>">
             
           </div>  
 
