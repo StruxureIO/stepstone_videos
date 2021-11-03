@@ -17,6 +17,7 @@ use humhub\components\Widget;
 use humhub\modules\stepstone_videos\models\VideoTags;
 use humhub\modules\user\models\User;
 use humhub\modules\content\helpers\ContentContainerHelper;
+use humhub\modules\stepstone_vendors\helpers\Url;
 
 
 /**
@@ -131,10 +132,11 @@ class VideosMenu extends LeftNavigation
               'id' => 'videos-tags-admin',
               'icon' => 'fa-tag',
               'label' => Yii::t('StepstoneVideosModule.base', 'Videos Tags'),
-              'url' => $container->createUrl('videos/tags'),
+              //'url' => $container->createUrl('videos/tags'),
               //'url' => [$container->createUrl('stepstone_videos/videos/admin/index')],
+              'url' => Url::to(['/stepstone_videos/admin/tags']),
               'sortOrder' => 9200,
-              'isActive' => MenuLink::isActiveState('stepstone_videos', 'videos', 'tags'),
+              'isActive' => MenuLink::isActiveState('stepstone_videos', 'admin', 'tags'),
               'isVisible' => Yii::$app->user->isAdmin()
               //'isVisible' => Yii::$app->user->getIdentity()->isSystemAdmin()    
           ]));
