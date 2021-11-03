@@ -3,8 +3,16 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use humhub\modules\stepstone_videos\VideoTags;
+use humhub\modules\content\helpers\ContentContainerHelper;
 
 \humhub\modules\stepstone_videos\assets\Assets::register($this);
+
+$container = ContentContainerHelper::getCurrent();
+
+if($container != null)
+  $add_url = $container->createUrl('/stepstone_videos/videos/addtag');
+else 
+  $add_url = '';
 
 ?>
 
@@ -61,7 +69,12 @@ use humhub\modules\stepstone_videos\VideoTags;
             </tbody>
           </table>
           <div id="tag-button-row">
-            <a id="step-add-video-tag" href="<?php echo Url::base() ?>/index.php?r=stepstone_videos%2Fvideos%2Faddtag&cguid=<?php echo $cguid ?>" class="btn btn-default">Add Tag</a>&nbsp;&nbsp;
+            <?php if (\Yii::$app->urlManager->enablePrettyUrl) { ?>   
+              <!--http://localhost/humhub/s/welcome-space/stepstone_videos/videos/addtag-->
+              <a id="step-add-video-tag" href="<?php echo $add_url ?>" class="btn btn-default">Add Tag</a>&nbsp;&nbsp;
+            <?php } else { ?>              
+              <a id="step-add-video-tag" href="<?php echo Url::base() ?>/index.php?r=stepstone_videos%2Fvideos%2Faddtag&cguid=<?php echo $cguid ?>" class="btn btn-default">Add Tag</a>&nbsp;&nbsp;
+            <?php } ?>  
             <!--http://localhost/humhub/index.php?r=stepstone_videos%2Fvideos%2Faddtags&cguid=178fdc90-6ef5-4b12-ba86-d66d2a018776-->
           </div>  
         </div>

@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use humhub\modules\videos\VideoTags;
+use humhub\modules\stepstone_videos\VideoTags;
+use humhub\modules\content\helpers\ContentContainerHelper;
 
 \humhub\modules\stepstone_videos\assets\Assets::register($this);
 
@@ -64,7 +65,12 @@ use humhub\modules\videos\VideoTags;
             </tbody>
           </table>
           <div id="tag-button-row">
-            <a id="step-add-video-tag" href="<?php echo Url::base() ?>/index.php?r=videos%2Fadmin%2Faddtag" class="btn btn-default">Add Tag</a>&nbsp;&nbsp;
+            <?php if (\Yii::$app->urlManager->enablePrettyUrl) { ?>   
+              <!--http://localhost/humhub/s/welcome-space/stepstone_videos/videos/addtag-->
+              <a id="step-add-video-tag" href="<?php echo Url::to(['/stepstone_videos/admin/addtag']); ?>" class="btn btn-default">Add Tag</a>&nbsp;&nbsp;
+            <?php } else { ?>  
+              <a id="step-add-video-tag" href="<?php echo Url::base() ?>/index.php?r=videos%2Fadmin%2Faddtag" class="btn btn-default">Add Tag</a>&nbsp;&nbsp;
+            <?php } ?>  
             <!--https://dev.theblacksheephub.com/index.php?r=videos%2Fadmin%2Fadd-->
           </div>  
         </div>
