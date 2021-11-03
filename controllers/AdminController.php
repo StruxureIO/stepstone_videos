@@ -266,7 +266,9 @@ class AdminController extends Controller
     
     public function actionAddtag() {
       
-      $model = new \humhub\modules\videos\stepstone_videos\VideoTags();
+      //Yii::$app->cache->flush();            
+      
+      $model = new \humhub\modules\stepstone_videos\models\VideoTags();
 
       if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
           return $this->redirect(['admin/tags']);

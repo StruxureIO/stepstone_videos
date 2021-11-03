@@ -764,7 +764,7 @@ class VideosController extends ContentContainerController
       $model = new \humhub\modules\stepstone_videos\models\VideoTags();
 
       if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
-          return $this->redirect(["videos/tags&cguid=$cguid"]);
+          return $this->redirect(['videos/tags', 'cguid' => $cguid]);
       }
 
       return $this->render('add', ['model' => $model]);
