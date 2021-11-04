@@ -16,10 +16,10 @@ if(!defined('VIDEO_THUMBNAIL_PATH'))
 
 if(defined('LOCALHOST')) {
   if(!defined('MAX_ITEMS')) 
-    define('MAX_ITEMS', 3);
+    define('MAX_ITEMS', 30);
 } else {
   if(!defined('MAX_ITEMS')) 
-    define('MAX_ITEMS', 9);
+    define('MAX_ITEMS', 30);
 }  
 
 // id numbers of tags

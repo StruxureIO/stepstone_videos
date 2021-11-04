@@ -52,9 +52,9 @@ if($videos) {
   
   $html .= '<div id="video-page-navigation">' . PHP_EOL;
   if($page > 0)
-    $html .= '  <a id="step-video-prev" data-page-id="'. ($page-1) .'">< Previous</a>' . PHP_EOL;
+    $html .= '  <a id="step-video-prev class="btn-comment-submit btn-sm btn btn-default"" data-page-id="'. ($page-1) .'">< Previous</a>' . PHP_EOL;
   if($page < $total_number_pages-1)
-    $html .= '  <a id="step-video-next" data-page-id="'. ($page+1) .'">Next ></a>' . PHP_EOL;
+    $html .= '  <a id="step-video-next class="btn-comment-submit btn-sm btn btn-default"" data-page-id="'. ($page+1) .'">Next ></a>' . PHP_EOL;
   $html .= '</div>' . PHP_EOL;
 
 } else {
