@@ -216,14 +216,17 @@ class AdminController extends Controller
       // delete video thumbnail
       $model = $this->findVideoModel($id);
       $image_url = $model->image_url;
-              
-      // base path
-      $image_path = Yii::getAlias('@app');
-      $image_path = str_replace('protected', $image_url, $image_path);
       
-      if(file_exists($image_path)) {
-        unlink($image_path);
-      }  
+      if(!empty($image_url)) {
+        // base path
+        $image_path = Yii::getAlias('@app');
+        $image_path = str_replace('protected', $image_url, $image_path);
+
+        if(file_exists($image_path)) {
+          unlink($image_path);
+        }          
+      }
+              
         
       // delete the record        
       $model->delete();
