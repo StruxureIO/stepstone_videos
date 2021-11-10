@@ -2,11 +2,13 @@
 //use Yii;
 use yii\helpers\Url;
 
-if(defined('LOCALHOST')) {
-  define('VIDEO_ASSET_COVER', Url::base() . '/assets/3925053c/images/video-cover.jpg');
-} else {
-  define('VIDEO_ASSET_COVER', Url::base() . '/assets/10ef8c64/images/video-cover.jpg');
-}
+//if(defined('LOCALHOST')) {
+//  define('VIDEO_ASSET_COVER', Url::base() . '/assets/3925053c/images/video-cover.jpg');
+//} else {
+//  define('VIDEO_ASSET_COVER', Url::base() . '/assets/10ef8c64/images/video-cover.jpg');
+//}
+define('VIDEO_ASSET_COVER', Url::base() . '/uploads/video-thumbnails/video-cover.jpg');
+
 
 $html = '';
 
