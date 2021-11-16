@@ -613,12 +613,12 @@ class VideosController extends ContentContainerController
     public function actionDelete($id, $cguid) {
       
       // delete tag list records
-      //$this->mTagList = new \humhub\modules\stepstone_videos\models\VideoTagList();
-      //$this->mTagList::deleteAll(['video_id' => $id]);
+      $this->mTagList = new \humhub\modules\stepstone_videos\models\VideoTagList();
+      $this->mTagList::deleteAll(['video_id' => $id]);
       
       // delete video thumbnail
-      //$model = $this->findVideoModel($id);
-      //$image_url = $model->image_url;
+      $model = $this->findVideoModel($id);
+      $image_url = $model->image_url;
       
       $content = $this->findContentModel($id);
       $content->delete();      
@@ -632,7 +632,7 @@ class VideosController extends ContentContainerController
       }  
         
       // delete the record        
-      //$model->delete();
+      $model->delete();
             
       return $this->redirect(["videos/adminindex", 'cguid' => $cguid]);
             
