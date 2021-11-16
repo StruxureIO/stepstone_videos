@@ -613,12 +613,15 @@ class VideosController extends ContentContainerController
     public function actionDelete($id, $cguid) {
       
       // delete tag list records
-      $this->mTagList = new \humhub\modules\stepstone_videos\models\VideoTagList();
-      $this->mTagList::deleteAll(['video_id' => $id]);
+      //$this->mTagList = new \humhub\modules\stepstone_videos\models\VideoTagList();
+      //$this->mTagList::deleteAll(['video_id' => $id]);
       
       // delete video thumbnail
-      $model = $this->findVideoModel($id);
-      $image_url = $model->image_url;
+      //$model = $this->findVideoModel($id);
+      //$image_url = $model->image_url;
+      
+      $content = $this->findContentModel($id);
+      $content->delete();      
               
       // base path
       $image_path = Yii::getAlias('@app');
@@ -629,7 +632,7 @@ class VideosController extends ContentContainerController
       }  
         
       // delete the record        
-      $model->delete();
+      //$model->delete();
             
       return $this->redirect(["videos/adminindex", 'cguid' => $cguid]);
             
@@ -645,6 +648,17 @@ class VideosController extends ContentContainerController
 
       throw new NotFoundHttpException('The requested page does not exist.');
     }  
+    
+    protected function findContentModel($id){
+
+      $mContent = new \humhub\modules\content\models\Content();
+
+      if(($model = $mContent::findOne(['object_id' => $id, 'object_model' => 'humhub\\modules\\stepstone_videos\\models\\VideosContent'])) !== null) {
+        return $model;
+      }
+
+      throw new NotFoundHttpException('The requested page does not exist.');
+    }         
         
     public function actionAjaxThumbnail() {
       

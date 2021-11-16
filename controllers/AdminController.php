@@ -217,6 +217,9 @@ class AdminController extends Controller
       $model = $this->findVideoModel($id);
       $image_url = $model->image_url;
       
+      $content = $this->findContentModel($id);
+      $content->delete();            
+      
       if(!empty($image_url)) {
         // base path
         $image_path = Yii::getAlias('@app');
@@ -301,6 +304,17 @@ class AdminController extends Controller
 
       throw new NotFoundHttpException('The requested page does not exist.');
     }  
+    
+    protected function findContentModel($id){
+
+      $mContent = new \humhub\modules\content\models\Content();
+
+      if(($model = $mContent::findOne(['object_id' => $id, 'object_model' => 'humhub\\modules\\stepstone_videos\\models\\VideosContent'])) !== null) {
+        return $model;
+      }
+
+      throw new NotFoundHttpException('The requested page does not exist.');
+    }             
         
     public function actionAjaxThumbnail() {
       
