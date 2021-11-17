@@ -92,14 +92,18 @@ class VideosContent extends ContentActiveRecord implements Searchable
 
     public function afterSave($insert, $changedAttributes)
     {
-        $users = $this->findSpaceMembers($this->content->contentcontainer_id);
+      
+        if($this->content->contentcontainer_id != null) {
+          
+          $users = $this->findSpaceMembers($this->content->contentcontainer_id);
 
-        //Sending notification
-        if (!empty($users)) {
-            $notification = VideoAdded::instance()
-                ->from($this->createdBy)
-                ->about($this);
-            $notification->sendBulk($users);
+          //Sending notification
+          if (!empty($users)) {
+              $notification = VideoAdded::instance()
+                  ->from($this->createdBy)
+                  ->about($this);
+              $notification->sendBulk($users);
+          }
         }
 
         parent::afterSave($insert, $changedAttributes);
