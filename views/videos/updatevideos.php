@@ -34,9 +34,9 @@ $base_url = Url::base() . '/';
 $this->registerJs("  
   $(document).on('click', '#generate-thumbnail', function (e) {
   
-    var video_title = $('#videos-video_title').val();    
+    var video_title = $('#videoscontent-video_title').val();    
     
-    var embed_code = $('#videos-embed_code').val();
+    var embed_code = $('#videoscontent-embed_code').val();
         
     var start = embed_code.indexOf('player.vimeo.com/video/') + 23;
     
@@ -54,7 +54,8 @@ $this->registerJs("
       'url' : '$ajax_thumbnail',
       'dataType' : 'html',
       'data' : {
-        '$ csrf_param' : '$ csrf_token',
+        'cguid' : '$cguid',                
+        '$csrf_param' : '$csrf_token',
         'video_id' : video_id,
         'video_title' : video_title
       },
