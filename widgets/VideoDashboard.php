@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\Url;
 use yii\db\Query;
 use humhub\components\Widget;
-use humhub\modules\stepstone_videos\models\Videos;
+use humhub\modules\stepstone_videos\models\VideosContent;
 
 /**
  *

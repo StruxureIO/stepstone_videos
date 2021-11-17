@@ -53,7 +53,7 @@ $this->registerJs("
       'url' : '$ajax_thumbnail',
       'dataType' : 'html',
       'data' : {
-        '$ csrf_param' : '$ csrf_token',
+        '$csrf_param' : '$csrf_token',
         'video_id' : video_id,
         'video_title' : video_title
       },
