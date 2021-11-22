@@ -60,7 +60,7 @@ $this->registerJs("
         'video_title' : video_title
       },
       'success' : function(data){        
-        $('#videos-image_url').val(data);        
+        $('#videoscontent-image_url').val(data);        
         $('#video-thumbnail-image').prop('src', '$base_url' + data);
         $('#video-thumbnail-image').show();        
       }
