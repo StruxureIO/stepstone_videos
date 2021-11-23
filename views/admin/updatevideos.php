@@ -33,7 +33,14 @@ $base_url = Url::base() . '/';
 $this->registerJs("  
   $(document).on('click', '#generate-thumbnail', function (e) {
   
-    var video_title = $('#videos-video_title').val();    
+    var video_title = $('#videos-video_title').val();
+    
+    video_title = video_title.trim();
+    
+    if(video_title.length < 1) {
+      alert('Please enter a title for the video.');
+      return false;
+    }    
     
     var embed_code = $('#videos-embed_code').val();
         
@@ -41,12 +48,12 @@ $this->registerJs("
     
     var end = embed_code.indexOf('?');
     
-    var video_id = embed_code.substring(start, end);
-
-    // test video id
-    //video_id = '569375685';
+    if(end == -1)
+      end = embed_code.indexOf('\"', start + 1);
     
-    console.log('video_id', video_id);
+    var video_id = embed_code.substring(start, end);
+    
+    //console.log('video_id', video_id);
           
     $.ajax({
       'type' : 'GET',

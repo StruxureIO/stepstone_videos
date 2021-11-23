@@ -34,7 +34,14 @@ $base_url = Url::base() . '/';
 $this->registerJs("  
   $(document).on('click', '#generate-thumbnail', function (e) {
   
-    var video_title = $('#videoscontent-video_title').val();    
+    var video_title = $('#videoscontent-video_title').val();  
+    
+    video_title = video_title.trim();
+    
+    if(video_title.length < 1) {
+      alert('Please enter a title for the video.');
+      return false;
+    }
     
     var embed_code = $('#videoscontent-embed_code').val();
         
@@ -42,10 +49,13 @@ $this->registerJs("
     
     var end = embed_code.indexOf('?');
     
+    if(end == -1)
+      end = embed_code.indexOf('\"', start + 1);
+      
+    console.log('end', end);
+        
     var video_id = embed_code.substring(start, end);
 
-    // test video id
-    //video_id = '569375685';
     
     console.log('video_id', video_id);
           
@@ -60,7 +70,7 @@ $this->registerJs("
         'video_title' : video_title
       },
       'success' : function(data){        
-        $('#videos-image_url').val(data);        
+        $('#videoscontent-image_url').val(data);        
         $('#video-thumbnail-image').prop('src', '$base_url' + data);
         $('#video-thumbnail-image').show();        
       }
