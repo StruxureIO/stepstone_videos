@@ -21,7 +21,7 @@ use yii\web\UrlManager;
       ul#videos-widget li {
         width: 100%;
         overflow: hidden;
-        margin-bottom:15px;
+        margin-bottom:20px;
       }      
       
       .vw-title {
@@ -62,10 +62,10 @@ use yii\web\UrlManager;
               $cover = Url::base() . '/' . $video['image_url'];              
             ?>
             <li> 
-              <div class="vw-title"><a href="<?php echo $watch_link ?>"><?php echo $video['video_title'] ?></a></div>
               <a href="<?php echo $watch_link ?>">
                 <img class="vw-video-thumbnail" src="<?php echo $cover ?>" alt="<?php echo $video['video_title'] ?> thumbnail image" >
               </a>  
+              <div class="vw-title"><a href="<?php echo $watch_link ?>"><?php echo $video['video_title'] ?></a></div>
             </li>
           <?php } ?>
         <?php } ?>
