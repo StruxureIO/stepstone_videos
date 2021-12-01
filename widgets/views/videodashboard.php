@@ -21,6 +21,7 @@ use yii\web\UrlManager;
       ul#videos-widget li {
         width: 100%;
         overflow: hidden;
+        margin-bottom:15px;
       }      
       
       .vw-title {
@@ -45,7 +46,7 @@ use yii\web\UrlManager;
     <div style="clear:both;"></div>
 
     <div class="panel-heading">
-        <i class="far fa-video">&nbsp;</i><strong>Latest Videos</strong>
+        </i><strong>Latest </strong> videos
     </div>
 
     <div class="panel-body">
@@ -65,7 +66,6 @@ use yii\web\UrlManager;
               <a href="<?php echo $watch_link ?>">
                 <img class="vw-video-thumbnail" src="<?php echo $cover ?>" alt="<?php echo $video['video_title'] ?> thumbnail image" >
               </a>  
-              <div class="vw-description"><?php echo $video['description'] ?></div>
             </li>
           <?php } ?>
         <?php } ?>
