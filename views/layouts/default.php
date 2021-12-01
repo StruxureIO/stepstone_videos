@@ -21,7 +21,12 @@ use humhub\modules\stepstone_videos\widgets\VideosMenu;
     </div>  
 
 
+    <script>
+      $(document).ready(function(){
+        $("a[href$='/s/welcome-space/stepstone_videos/videos']").parent().addClass('active');
+      });
 
+    </script>
 
       
       
