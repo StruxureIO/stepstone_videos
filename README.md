@@ -44,6 +44,5 @@ text in the Video Thumbnail File field or upload a different file and save the v
  
 The video page menu allows the user to view their favorite videos or the most popular videos 
 (the ones with the most views) or the latest videos, which is the main videos page. The latest 
- 
 videos page display videos in order they were added. In addition to these, there are menu 
 options to display videos tagged as either Masterminds or Training Videos or Case Studies. 
