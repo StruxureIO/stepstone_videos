@@ -38,7 +38,7 @@ use humhub\modules\content\helpers\ContentContainerHelper;
                   
                 ?>
               
-                <tr data-id="<?php echo $tag->tag_id ?>">
+                <tr class="video-tag-row" data-id="<?php echo $tag->tag_id ?>">
                   <td class="tb-tag-name"><?php echo $tag->tag_name ?></td>
                   <!--<td class="tb-tag-icon center"><i class="< ?php echo $tag->icon ?>"></i></td>-->
                   <!--<td class="tb-tag-menu center">< ?php echo $menu_checked ?></td>-->
