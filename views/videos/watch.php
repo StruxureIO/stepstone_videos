@@ -3,12 +3,17 @@
 
 use humhub\modules\stepstone_videos\widgets\VideosMenu;
 include "protected/modules/stepstone_videos/widgets/VideosMenu.php";
+use humhub\modules\content\helpers\ContentContainerHelper;
 
 // Register our module assets, this could also be done within the controller
 \humhub\modules\stepstone_videos\assets\Assets::register($this);
 
 $current_user_id = \Yii::$app->user->identity->ID;
 //$checked = ($favorite['favorite']) ? 'checked' : '';
+
+
+$container = ContentContainerHelper::getCurrent();
+$container_guid = ($container) ? $container->guid : null;
 
 ?>
 
@@ -52,7 +57,7 @@ $csrf_token = Yii::$app->request->csrfToken;
 $this->registerJs("
   $(document).on('click', '.step-favorite', function (e) {
     e.stopImmediatePropagation();
-    var favorite_icon = $(this).find('span.fa.fa-star')
+    var favorite_icon = $(this).find('svg.svg-inline--fa.fa-star')
     var user_id = $(this).attr('data-user');
     var video_id  = $(this).attr('data-video');
     if( $(favorite_icon).hasClass('checked') ) {
@@ -72,6 +77,7 @@ $this->registerJs("
       'url' : '$ajax_favorite',
       'dataType' : 'html',
       'data' : {
+        'cguid' : '$container_guid',      
         '$csrf_param' : '$csrf_token',
         'user_id' : user_id,
         'video_id' : video_id,
