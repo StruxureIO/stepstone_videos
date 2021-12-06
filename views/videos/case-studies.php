@@ -93,7 +93,7 @@ $this->registerJs("
   
   $(document).on('click', '.step-favorite', function (e) {
     e.stopImmediatePropagation();
-    var favorite_icon = $(this).find('span.fa.fa-star')
+    var favorite_icon = $(this).find('svg.svg-inline--fa.fa-star')
     var user_id = $(this).attr('data-user');
     var video_id  = $(this).attr('data-video');
     if( $(favorite_icon).hasClass('checked') ) {
