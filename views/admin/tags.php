@@ -51,7 +51,7 @@ use humhub\modules\content\helpers\ContentContainerHelper;
                   <td class="tb-tag-delete center"><?= Html::a('<i class="fal fa-trash-alt"></i>', ['deletetag', 'id' => $tag->tag_id], [
                     'class' => 'step-delete-tag',
                     'data' => [
-                      'confirm' => 'Are you sure you want to delete this item?',
+                      'confirm' => 'Are you sure you want to delete ' . $tag->tag_name . '?',
                       'method' => 'post',
                     ],
                   ]) ?></td>
